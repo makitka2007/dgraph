@@ -125,7 +125,7 @@ func AssignUids(ctx context.Context, nquads []*api.NQuad) (map[string]uint64, er
 			return nil, errors.Errorf("Subject must not be empty for nquad: %+v", nq)
 		}
 		var uid uint64
-		if strings.HasPrefix(nq.Subject, "_:") {
+		if strings.HasPrefix(nq.Subject, "_:") || strings.HasPrefix(nq.Subject, "uid(") {
 			newUids[nq.Subject] = 0
 		} else if uid, err = gql.ParseUid(nq.Subject); err != nil {
 			return newUids, err
@@ -136,7 +136,7 @@ func AssignUids(ctx context.Context, nquads []*api.NQuad) (map[string]uint64, er
 
 		if len(nq.ObjectId) > 0 {
 			var uid uint64
-			if strings.HasPrefix(nq.ObjectId, "_:") {
+			if strings.HasPrefix(nq.ObjectId, "_:") || strings.HasPrefix(nq.ObjectId, "uid(") {
 				newUids[nq.ObjectId] = 0
 			} else if uid, err = gql.ParseUid(nq.ObjectId); err != nil {
 				return newUids, err
