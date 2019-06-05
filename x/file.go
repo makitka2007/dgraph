@@ -25,7 +25,7 @@ import (
 
 // WriteFileSync is the same as bufio.WriteFile, but syncs the data before closing.
 func WriteFileSync(filename string, data []byte, perm os.FileMode) error {
-	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, perm)
+	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC|os.O_SYNC, perm)
 	if err != nil {
 		return err
 	}
